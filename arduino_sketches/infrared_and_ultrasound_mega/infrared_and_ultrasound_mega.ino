@@ -5,17 +5,22 @@
  * INFRA val_1 val_2 ...
  * ULTRA val_1 val_2 ...
  */
-#include <NewPing.h>
 
-#define INFRA_NB      4 // Number of infrared sensors.
-#define INFRA_LATENCY 100 // Milliseconds between sensor read (at least 2ms !)
-#define SONAR_NUM     8 // Number of ultrasonic sensors.
-#define MAX_DISTANCE 100 // Maximum distance (in cm) to ping.
-#define PING_INTERVAL 33 // Milliseconds between sensor pings (29ms is about the min to avoid cross-sensor echo).
+#include <NewPing.h>
+// Number of infrared sensors.
+#define INFRA_NB      8
+// Milliseconds between sensor read (at least 2ms !)
+#define INFRA_LATENCY 100 
+// Number of ultrasonic sensors.
+#define SONAR_NUM     6 
+// Maximum distance (in cm) to ping. Beyond this distance, the sensor doesn't wait the signal return (saying "all clear !")
+#define MAX_DISTANCE 100 
+// Milliseconds between sensor pings (29ms is about the min to avoid cross-sensor echo).
+#define PING_INTERVAL 33 
 
 // Pin number associated with each sensor, in the order same order as the
 // "Details" section of the InfraredPotholes.msg message definition.
-const int INFRA_PINS[INFRA_NB] = {A0, A1, A2,A3};
+const int INFRA_PINS[INFRA_NB] = {A0,A1,A2,A3,A4,A5,A6,A7};
 
 unsigned long pingTimer[SONAR_NUM]; // Holds the times when the next ping should happen for each sensor.
 unsigned int cm[SONAR_NUM];         // Where the ping distances are stored.
@@ -23,23 +28,15 @@ uint8_t currentUltrasoundSensor = 0;          // Keeps track of which sensor is 
 unsigned long infraredTimer;
 int alarme = 0;
 
-NewPing sonar[SONAR_NUM] = {     // Ultrasonic Sensor object array. Each sensor's trigger pin, echo pin, and max distance to ping.
-//each sensor localisation si done from the kinect Point of view
-  NewPing(53, 52, MAX_DISTANCE), //LEFT Sensor
-  NewPing(51, 50, MAX_DISTANCE), //FRONT LEFT Sensor
-  NewPing(49, 48, MAX_DISTANCE), //FRONT RIGHT Sensor
-  NewPing(47, 46, MAX_DISTANCE), //RIGH Sensor
-  NewPing(45, 44, MAX_DISTANCE),
-  NewPing(43, 42, MAX_DISTANCE),
-  NewPing(41, 40, MAX_DISTANCE),
-  NewPing(39, 38, MAX_DISTANCE)
-/*  NewPing(31, 32, MAX_DISTANCE),
-  NewPing(34, 33, MAX_DISTANCE),
-  NewPing(35, 36, MAX_DISTANCE),
-  NewPing(37, 38, MAX_DISTANCE),
-  NewPing(39, 40, MAX_DISTANCE),
-  NewPing(50, 51, MAX_DISTANCE),
-  NewPing(52, 53, MAX_DISTANCE)*/
+NewPing sonar[SONAR_NUM] = {     
+  // Ultrasonic Sensor object array. Each sensor's trigger pin, echo pin, and max distance to ping.
+  //each sensor localisation si done from the kinect Point of view
+  NewPing(27, 26, MAX_DISTANCE),//front left
+  NewPing(2, 3, MAX_DISTANCE), //front center
+  NewPing(4, 5, MAX_DISTANCE),//front right
+  NewPing(6, 7, MAX_DISTANCE),//rear right
+  NewPing(8, 9, MAX_DISTANCE),//rear center
+  NewPing(10, 11, MAX_DISTANCE)//rear left  
 };
 
 /*
@@ -60,11 +57,12 @@ NewPing sonar[SONAR_NUM] = {     // Ultrasonic Sensor object array. Each sensor'
     This code is in the public domain.
 
 */
+
 // Reads a value from an infrared sensor and returns 0 for no hole, 1 for hole.
 int infraredRead(int pin) {
     int sensorValue = analogRead(pin);
     // The read value should be 0 or 1023 (binary)
-    if (sensorValue < 512) {
+    if (sensorValue < 20) {
         // The ground is close, i.e. no hole
         return 0;
     } else {
@@ -73,8 +71,6 @@ int infraredRead(int pin) {
 }
 
 int ultrasoundRead(int sen) {
-    rospy.loginfo("demande ultrasons mega");
-    printf("demande ultrasons mega");
     return cm[sen];
 }
 
