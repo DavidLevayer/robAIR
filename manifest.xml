@@ -1,0 +1,18 @@
+<package>
+  <description brief="robair_demo">
+
+     Demo of RobAIR
+
+  </description>
+  <author>RobAIR Teams</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://fablab.ensimag.fr/index.php/RobAIR</url>
+  <depend package="rospy"/>
+  <depend package="roscpp"/>
+  <depend package="std_msgs"/>
+  <depend package="nav_msgs"/>
+  <depend package="tf"/>
+</package>
+
+

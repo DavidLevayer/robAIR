@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/fablab/ros_workspace/robair_demo/build/devel/setup.sh

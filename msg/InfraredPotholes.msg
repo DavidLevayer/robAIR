@@ -1,0 +1,14 @@
+# Is there a hole under ANY of the sensors?
+bool hole
+# Details per sensor
+# True = hole
+# False = no hole
+bool rear_left
+bool rear_center_left
+bool rear_center_right
+bool rear_right
+bool front_left
+bool front_center_left
+bool front_center_right
+bool front_right
+
