@@ -6,9 +6,10 @@
   <include file="$(find robair_demo)/launch/odometry.launch" />
 
   <include file="$(find robair_demo)/launch/tfTransform.launch" />
-
+  
   <!--Chargement de la map-->
-  <include file="$(find robair_demo)/launch/mapLoading.launch" />
+  <!--include file="$(find robair_demo)/launch/mapLoading.launch" /-->
+
   
   <!-- AMCL -->
   <include file="$(find robair_demo)/launch/amcl.launch" />
@@ -22,7 +23,7 @@
 
 
   <node pkg="rviz" type="rviz" name="rviz" 
-      args="-d $(find robair_demo)/rviz_cfg/navigation.vcg"/>
+      args="-d $(find robair_demo)/rviz_cfg/configLidar.rviz"/>
 
 
 </launch>

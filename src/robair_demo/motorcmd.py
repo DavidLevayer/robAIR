@@ -182,7 +182,7 @@ class MotionControlNode(object):
 	print "...............REAR...................." + str(self.potholes.rear_center_right)
 	print "...............REAR...................." + str(self.potholes.rear_right)
         if (not self.potholes.rear_right) and (not self.potholes.rear_left) and (
-	   self.potholes.rear_center_right) and (not self.potholes.rear_center_left) and (
+	  not self.potholes.rear_center_right) and (not self.potholes.rear_center_left) and (
 	#		        self.obstacles.south_west  >= value and
 			        self.obstacles.south_left  >= value and
 			        self.obstacles.south_right >= value and
@@ -204,9 +204,9 @@ class MotionControlNode(object):
                     #self.send_order_backtrack(direction)
                     self.send_order(4)#stop
 	    elif direction ==1:
-                if self.isRearSensorsOK(15):
-                    print "order normal"
-                    self.send_order(direction)
+                if self.isRearSensorsOK(25):
+                   print "order normal"
+                   self.send_order(direction)
                 else:
                     print "reverse order"
                     #self.send_order_backtrack(direction) 
