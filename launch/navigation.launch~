@@ -1,0 +1,31 @@
+<launch>
+
+  <!-- Robot configuration -->
+  <include file="$(find robair_demo)/launch/hokuyoLaser.launch" />
+  <include file="$(find robair_demo)/launch/pilotageClavier.launch" />
+  <include file="$(find robair_demo)/launch/odometry.launch" />
+
+  <include file="$(find robair_demo)/launch/tfTransform.launch" />
+  
+  <!--Chargement de la map-->
+  <!--include file="$(find robair_demo)/launch/mapLoading.launch" /-->
+
+  
+  <!-- AMCL -->
+  <include file="$(find robair_demo)/launch/amcl.launch" />
+
+
+  <!-- move base --> 
+  <include file="$(find robair_demo)/launch/moveBase.launch" />
+
+  <!-- node to transform cmd_vel to cmd -->
+  <node pkg="robair_demo" type="cmd_transform" name="cmd_transform"/>
+
+
+  <node pkg="rviz" type="rviz" name="rviz" 
+      args="-d $(find robair_demo)/configLidar.rviz"/>
+
+
+</launch>
+
+
